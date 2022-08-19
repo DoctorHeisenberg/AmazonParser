@@ -1,0 +1,33 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:MusConv.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" 
+		d:DesignWidth="800" 
+		d:DesignHeight="450"
+        x:Class="MusConv.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="MusConv"
+        x:DataType="vm:MainWindowViewModel">
+
+	<StackPanel>
+		<StackPanel>
+			<TextBlock Text="{Binding Playlist.PlaylistInfo.Name, StringFormat='Playlist Name: {0}'}"/>
+			<TextBlock Text="{Binding Playlist.PlaylistInfo.Description, StringFormat='Playlist Description: {0}'}"/>
+		</StackPanel>
+		<ListBox Items="{Binding Playlist.Songs}}">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<StackPanel>
+						<TextBlock Text="{Binding Path=Name}" />
+						<TextBlock Text="{Binding Path=ArtistName}" />
+						<TextBlock Text="{Binding Path=AlbumName}" />
+						<TextBlock Text="{Binding Path=Duration}" />
+					</StackPanel>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+	</StackPanel>
+
+</Window>
