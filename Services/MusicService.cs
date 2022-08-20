@@ -1,7 +1,9 @@
 ﻿using HtmlAgilityPack;
 using MusConv.Models;
 using MusConv.Services.Interfaces;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,18 +17,19 @@ namespace MusConv.Services
     {
         public Playlist GetPlaylist(string url)
         {
-            using (ChromeDriver browser = new ChromeDriver("D:\\IT\\chromedriver_win32"))
+            using (ChromeDriver driver = new ChromeDriver("D:\\IT\\chromedriver_win32"))
             {
-                browser.Navigate().GoToUrl(url);
+                driver.Navigate().GoToUrl(url);
 
                 Thread.Sleep(2000);
-                var page = browser.PageSource;
+                var page = driver.PageSource;
 
 
                 HtmlDocument htmlDoc = new();
                 htmlDoc.LoadHtml(page);
 
-                Thread.Sleep(5000);
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+                wait.Until(driver => driver.FindElement(By.TagName("music-detail-header")));
 
                 var headerPage = htmlDoc.DocumentNode.SelectSingleNode("//music-detail-header");
                 var songsClass = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='ReactVirtualized__Grid__innerScrollContainer']");
